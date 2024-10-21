@@ -1,9 +1,22 @@
 /* style.css */
+.roboto-medium {
+    font-family: "Roboto", sans-serif;
+    font-weight: 500;
+    font-style: normal;
+  }
+  
+  .roboto-bold-italic {
+    font-family: "Roboto", sans-serif;
+    font-weight: 700;
+    font-style: italic;
+  }  
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Roboto", sans-serif;
     margin: 0;
     padding: 0;
     background-color: #1B512D;
+    
 }
 
 header {
@@ -11,6 +24,7 @@ header {
     color: white;
     text-align: center;
     padding: 1em 0;
+    font-style: italic;
 }
 
 main {
@@ -40,28 +54,6 @@ input[type="number"] {
     width: 100px;
 }
 
-input[type="checkbox"] {
-    margin-left: 10px;
-}
-
-#gradeDisplay {
-    width: 100%;
-    background-color: #f3f3f3;
-    border-radius: 5px;
-    overflow: hidden;
-    margin-top: 20px;
-}
-
-#gradeDisplay .bar {
-    height: 30px;
-    background-color: #4caf50;
-    text-align: center;
-    line-height: 30px;
-    color: white;
-    width: 0;
-    transition: width 0.5s;
-}
-
 button {
     background-color: #4caf50; /* Solid color */
     color: white;
@@ -72,8 +64,21 @@ button {
     transition: background-color 0.3s;
     margin-right: 5px; /* Add space between buttons */
     margin-bottom: 10px; /* Add space between buttons */
+    font-family: "Roboto", sans-serif;
 }
 
 button:hover {
     background-color: #45a049; /* Darker shade on hover */
+}
+
+.bar {
+    height: 20px;
+    background-color: #4caf50;
+    text-align: center;
+    color: white;
+}
+
+.label {
+    font-weight: bold;
+    margin-bottom: 5px;
 }

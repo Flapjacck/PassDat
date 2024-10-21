@@ -36,7 +36,22 @@ function calculateGrade() {
     });
 
     // Calculate final grade
-    const finalGrade = totalScore / (totalWeight / 100);
+    const finalGrade = (totalScore / (totalWeight / 100)).toFixed(2);
     const gradeDisplay = document.getElementById('gradeDisplay');
-    gradeDisplay.innerHTML = `<div class="bar" style="width: ${finalGrade}%;">${finalGrade}%</div>`;
+    gradeDisplay.innerHTML = `
+    <div class="label">Current mark:</div>
+    <div class="bar" style="width: ${finalGrade}%;">${finalGrade}%</div>
+    `;
+
+    // Show lowest possible mark if total weight is below 100%
+    const lowestMark = (totalScore / ((totalWeight + (100 - totalWeight)) / 100)).toFixed(2)
+    const lowestMarkDisplay = document.getElementById('lowestMarkDisplay');
+    if (totalWeight < 100) {
+        lowestMarkDisplay.innerHTML = `
+            <div class="label">Lowest possible mark:</div>
+            <div class="bar" style="width: ${lowestMark}%;">${lowestMark}%</div>
+        `;
+    } else {
+        lowestMarkDisplay.innerHTML = '';
+    }
 }

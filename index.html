@@ -6,6 +6,9 @@
     <title>PassDat - Grade Calculator</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" defer></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,500;1,700&display=swap" rel="stylesheet">
 </head>
 <body>
     <header>
@@ -24,8 +27,9 @@
             <button type="button" onclick="addAssignment()">Add Assignment</button>
             <button type="button" onclick="removeAssignment()">Remove Assignment</button><br>
             <button type="button" onclick="calculateGrade()">Calculate Grade</button>
+            <div id="gradeDisplay"></div>
+            <div id="lowestMarkDisplay"></div>
         </form>
-        <div id="gradeDisplay"></div>
     </main>
 </body>
 </html>
