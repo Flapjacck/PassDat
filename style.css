@@ -36,6 +36,7 @@ form {
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 25px;
 }
 
 .assignment{
@@ -82,3 +83,45 @@ button:hover {
     font-weight: bold;
     margin-bottom: 5px;
 }
+
+h2 {
+    cursor: pointer;
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+#formContent {
+    display: block;
+}
+
+#addClassButton, #removeClassButton {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+#addClassButton {
+    background-color: #4CAF50;
+    color: white;
+}
+
+#addClassButton:hover {
+    background-color: #45a049;
+}
+
+#removeClassButton {
+    background-color: #f44336;
+    color: white;
+}
+
+#removeClassButton:hover {
+    background-color: #e53935;
+}
+
