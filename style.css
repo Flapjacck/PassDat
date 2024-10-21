@@ -11,12 +11,11 @@
     font-style: italic;
   }  
 
-body {
+  body {
     font-family: "Roboto", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #1B512D;
-    
+    background: linear-gradient(to right, #1B512D, #4CAF50);
 }
 
 header {
@@ -76,7 +75,11 @@ button:hover {
     height: 20px;
     background-color: #4caf50;
     text-align: center;
-    color: white;
+    color: rgb(0, 0, 0);
+}
+
+.gradeDisplay, .lowestMarkDisplay, .remainingWeightDisplay, .passMarkDisplay {
+    margin-top: 10px;
 }
 
 .label {
@@ -125,3 +128,8 @@ h2 {
     background-color: #e53935;
 }
 
+.bottom-text {
+    text-align: center;
+    margin-top: 75px;
+
+}

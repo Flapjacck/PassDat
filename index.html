@@ -16,7 +16,7 @@
     </header>
     <main id="mainContent">
         <form class="gradeForm">
-            <h2 class="formHeader" contenteditable="true" oninput="updateHeader(this)" onclick="toggleForm(this)">Grade Form</h2>
+            <h2 class="formHeader" contenteditable="true" oninput="updateHeader(this)" onclick="toggleForm(this)">Class #..</h2>
             <div class="formContent">
                 <div class="assignments">
                     <div class="assignment">
@@ -31,10 +31,18 @@
                 <button type="button" onclick="calculateGrade(this)">Calculate Grade</button>
                 <div class="gradeDisplay"></div>
                 <div class="lowestMarkDisplay"></div>
+                <div class="remainingWeightDisplay"></div>
+                <div class="passMarkDisplay"></div>
             </div>
         </form>
         <button id="addClassButton" onclick="addClass()">Add Class</button>
         <button id="removeClassButton" onclick="removeClass()">Remove Class</button>
+        <div class="bottom-text">
+            <p>Tip: Save your progress by saving the webpage. Remember to save your work frequently to avoid losing any progress!</p>
+            <p>Windows: CTRL + S</p>
+            <p>Mac: Choose File > Save As</p>
+            <p>Phone: Add to a list or save locally</p>
+        </div>
     </main>
 </body>
 </html>

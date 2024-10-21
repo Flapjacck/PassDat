@@ -14,8 +14,20 @@ function updateHeader(header) {
 function addAssignment(button) {
     const form = button.closest('form');
     const assignments = form.querySelector('.assignments');
-    const newAssignment = assignments.firstElementChild.cloneNode(true);
-    assignments.appendChild(newAssignment);
+    const assignmentCount = assignments.children.length + 1;
+
+    const newAssignmentHTML = `
+        <div class="assignment">
+            <label>Assignment/Exam ${assignmentCount} Grade (%):</label>
+            <input type="number" class="assignmentGrade" min="0" max="100">
+            <label>Weight (%):</label>
+            <input type="number" class="assignmentWeight" min="0" max="100">
+        </div>
+    `;
+
+    const newAssignment = document.createElement('div');
+    newAssignment.innerHTML = newAssignmentHTML;
+    assignments.appendChild(newAssignment.firstElementChild);
 }
 
 function removeAssignment(button) {
@@ -51,25 +63,72 @@ function calculateGrade(button) {
     // Show lowest possible mark if total weight is below 100%
     const lowestMark = (totalScore / ((totalWeight + (100 - totalWeight)) / 100)).toFixed(2);
     const lowestMarkDisplay = form.querySelector('.lowestMarkDisplay');
+    const remainingWeightDisplay = form.querySelector('.remainingWeightDisplay');
+    const passMarkDisplay = form.querySelector('.passMarkDisplay');
+
     if (totalWeight < 100) {
         lowestMarkDisplay.innerHTML = `
             <div class="label">Lowest possible mark:</div>
             <div class="bar" style="width: ${lowestMark}%;">${lowestMark}%</div>
         `;
+
+        // Calculate and display remaining weight
+        const remainingWeight = (100 - totalWeight).toFixed(2);
+        remainingWeightDisplay.innerHTML = `
+            <div class="label">Remaining weight:</div>
+            <div class="bar" style="width: ${remainingWeight}%;">${remainingWeight}%</div>
+        `;
+
+        // Calculate and display the mark needed to pass the course
+        const passMark = ((50 - totalScore) / (remainingWeight / 100)).toFixed(2);
+        if (passMark <= 0) {
+            passMarkDisplay.innerHTML = `
+            <div class="label">Minimum mark needed to pass:</div>
+            <div class="bar">You PassDat Already</div>
+            `;
+        } else {
+            passMarkDisplay.innerHTML = `
+            <div class="label">Minimum mark needed to pass:</div>
+            <div class="bar" style="width: ${passMark}%;">${passMark}%</div>
+            `;
+    }
     } else {
         lowestMarkDisplay.innerHTML = '';
+        remainingWeightDisplay.innerHTML = '';
+        passMarkDisplay.innerHTML = '';
     }
 }
 
 function addClass() {
     const mainContent = document.getElementById('mainContent');
-    const gradeForm = document.querySelector('.gradeForm');
-    const newForm = gradeForm.cloneNode(true);
     
-    // Remove id attributes from the cloned form and its elements
-    newForm.removeAttribute('id');
-    const elements = newForm.querySelectorAll('[id]');
-    elements.forEach(element => element.removeAttribute('id'));
+    // HTML template for the new class form
+    const template = document.createElement('template');
+    template.innerHTML = `
+        <form class="gradeForm">
+            <h2 class="formHeader" contenteditable="true" oninput="updateHeader(this)" onclick="toggleForm(this)">Class #..</h2>
+            <div class="formContent">
+                <div class="assignments">
+                    <div class="assignment">
+                        <label>Assignment/Exam 1 Grade (%):</label>
+                        <input type="number" class="assignmentGrade" min="0" max="100">
+                        <label>Weight (%):</label>
+                        <input type="number" class="assignmentWeight" min="0" max="100">
+                    </div>
+                </div>
+                <button type="button" onclick="addAssignment(this)">Add Assignment</button>
+                <button type="button" onclick="removeAssignment(this)">Remove Assignment</button><br>
+                <button type="button" onclick="calculateGrade(this)">Calculate Grade</button>
+                <div class="gradeDisplay"></div>
+                <div class="lowestMarkDisplay"></div>
+                <div class="remainingWeightDisplay"></div>
+                <div class="passMarkDisplay"></div>
+            </div>
+        </form>
+    `.trim();
+    
+    // Clone the template content
+    const newForm = template.content.firstChild.cloneNode(true);
     
     mainContent.insertBefore(newForm, document.getElementById('addClassButton'));
 }
