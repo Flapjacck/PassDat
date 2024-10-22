@@ -1,2 +1,4 @@
-# PassDat
-Webpage to calculate your current grade and what you need to pass
+![Passdat-logo](./images/passdat-logo.png)
+
+# PassDat - Grade Calculator
+Webpage to calculate your current grade and what you need to pass. Made using JS, HTML, and some CSS.
