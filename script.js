@@ -1,4 +1,8 @@
-
+function toggleForm(button) {
+    const form = button.closest('form');
+    form.classList.toggle('collapsed');
+    button.textContent = form.classList.contains('collapsed') ? '∧' : '∨';
+}
 
 function addAssignment(button) {
     const form = button.closest('form');
@@ -52,39 +56,30 @@ function calculateGrade(button) {
     // Show lowest possible mark if total weight is below 100%
     const lowestMark = (totalScore / ((totalWeight + (100 - totalWeight)) / 100)).toFixed(2);
     const lowestMarkDisplay = form.querySelector('.lowestMarkDisplay');
-    const remainingWeightDisplay = form.querySelector('.remainingWeightDisplay');
+    lowestMarkDisplay.innerHTML = `
+        <div class="label">Lowest possible mark:</div>
+        <div class="bar" style="width: ${lowestMark}%;">${lowestMark}%</div>
+    `;
+
+    // Calculate and display the mark needed to pass the course
+    const remainingWeight = 100 - totalWeight;
+    const passMark = ((50 - totalScore) / (remainingWeight / 100)).toFixed(2);
     const passMarkDisplay = form.querySelector('.passMarkDisplay');
-
-    if (totalWeight < 100) {
-        lowestMarkDisplay.innerHTML = `
-            <div class="label">Lowest possible mark:</div>
-            <div class="bar" style="width: ${lowestMark}%;">${lowestMark}%</div>
-        `;
-
-        // Calculate and display remaining weight
-        const remainingWeight = (100 - totalWeight).toFixed(2);
-        remainingWeightDisplay.innerHTML = `
-            <div class="label">Remaining weight:</div>
-            <div class="bar" style="width: ${remainingWeight}%;">${remainingWeight}%</div>
-        `;
-
-        // Calculate and display the mark needed to pass the course
-        const passMark = ((50 - totalScore) / (remainingWeight / 100)).toFixed(2);
-        if (passMark <= 0) {
-            passMarkDisplay.innerHTML = `
+    if (passMark <= 0) {
+        passMarkDisplay.innerHTML = `
             <div class="label">Minimum mark needed to pass:</div>
             <div class="bar">You PassDat Already</div>
-            `;
-        } else {
-            passMarkDisplay.innerHTML = `
+        `;
+    } else if (passMark > 100) {
+        passMarkDisplay.innerHTML = `
+            <div class="label">Minimum mark needed to pass:</div>
+            <div class="bar">You're not going to PassDat</div>
+        `;
+    } else {
+        passMarkDisplay.innerHTML = `
             <div class="label">Minimum mark needed to pass:</div>
             <div class="bar" style="width: ${passMark}%;">${passMark}%</div>
-            `;
-    }
-    } else {
-        lowestMarkDisplay.innerHTML = '';
-        remainingWeightDisplay.innerHTML = '';
-        passMarkDisplay.innerHTML = '';
+        `;
     }
 }
 
@@ -94,7 +89,11 @@ function addClass() {
     // HTML template for the new class form
     const template = document.createElement('template');
     template.innerHTML = `
-        <form class="gradeForm">
+        <form class="gradeForm collapsible">
+            <div class="formHeaderContainer">
+                <input type="text" class="formHeader" value="Grade Calculator Form">
+                <button type="button" id="toggleFormButton" onclick="toggleForm(this)">v</button>
+            </div>
             <div class="formContent">
                 <div class="assignments">
                     <div class="assignment">
@@ -111,6 +110,7 @@ function addClass() {
                 <div class="lowestMarkDisplay"></div>
                 <div class="remainingWeightDisplay"></div>
                 <div class="passMarkDisplay"></div>
+                <button type="button" class="removeClassButton" onclick="removeClass(this)">Remove Class</button>
             </div>
         </form>
     `.trim();
@@ -121,10 +121,10 @@ function addClass() {
     mainContent.insertBefore(newForm, document.getElementById('addClassButton'));
 }
 
-function removeClass() {
-    const mainContent = document.getElementById('mainContent');
-    const forms = mainContent.getElementsByTagName('form');
-    if (forms.length > 1) {
-        mainContent.removeChild(forms[forms.length - 1]);
+function removeClass(button) {
+    const form = button.closest('form');
+    const confirmation = confirm("Are you sure you want to remove this class?");
+    if (confirmation) {
+        form.parentNode.removeChild(form);
     }
 }

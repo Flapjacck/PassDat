@@ -15,8 +15,11 @@
         <h1>PassDat - Grade Calculator</h1>
     </header>
     <main id="mainContent">
-        <form class="gradeForm">
-            <input type="text" class="formHeader" value="Grade Calculator Form">
+        <form class="gradeForm collapsible">
+            <div class="formHeaderContainer">
+                <input type="text" class="formHeader" value="Grade Calculator Form">
+                <button type="button" id="toggleFormButton" onclick="toggleForm(this)">v</button>
+            </div>
             <div class="formContent">
                 <div class="assignments">
                     <div class="assignment">
@@ -33,10 +36,10 @@
                 <div class="lowestMarkDisplay"></div>
                 <div class="remainingWeightDisplay"></div>
                 <div class="passMarkDisplay"></div>
+                <button type="button" class="removeClassButton" onclick="removeClass(this)">Remove Class</button>
             </div>
         </form>
         <button id="addClassButton" onclick="addClass()">Add Class</button>
-        <button id="removeClassButton" onclick="removeClass()">Remove Class</button>
         <div class="bottom-text">
             <p>Tip: Save your progress by saving the webpage. Remember to save your work frequently to avoid losing any progress!</p>
             <p>Windows: CTRL + S</p>
