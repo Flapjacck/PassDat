@@ -1,15 +1,4 @@
-function toggleForm(header) {
-    const formContent = header.nextElementSibling;
-    if (formContent.style.display === 'none' || formContent.style.display === '') {
-        formContent.style.display = 'block';
-    } else {
-        formContent.style.display = 'none';
-    }
-}
 
-function updateHeader(header) {
-    header.textContent = header.textContent.trim() ? header.textContent : 'Grade Form';
-}
 
 function addAssignment(button) {
     const form = button.closest('form');
@@ -106,7 +95,6 @@ function addClass() {
     const template = document.createElement('template');
     template.innerHTML = `
         <form class="gradeForm">
-            <h2 class="formHeader" contenteditable="true" oninput="updateHeader(this)" onclick="toggleForm(this)">Class #..</h2>
             <div class="formContent">
                 <div class="assignments">
                     <div class="assignment">

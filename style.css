@@ -11,15 +11,15 @@
     font-style: italic;
   }  
 
-  body {
+body {
     font-family: "Roboto", sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(to right, #1B512D, #4CAF50);
+    background-color: #323030;
 }
 
 header {
-    background-color: #4CAF50;
+    background-color: #323030;
     color: white;
     text-align: center;
     padding: 1em 0;
@@ -33,9 +33,18 @@ main {
 form {
     background: #DEF4C6;
     padding: 20px;
-    border-radius: 5px;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    margin-bottom: 25px;
+    margin: 0 25px 25px 25px;
+}
+
+.formHeader {
+    background-color: #4CAF50; /* Change this to your desired color */
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 1.5em;
+    border-radius: 5px 5px 0 0; /* Optional: for rounded corners */
 }
 
 .assignment{
@@ -96,18 +105,13 @@ button:hover {
     margin-top: 10px;
 }
 
-.label {
-    font-weight: bold;
-    margin-bottom: 5px;
+.assignment {
+    display: flex;
+    flex-direction: column;
 }
 
-h2 {
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    text-align: center;
+.assignment label,
+.assignment input {
     margin-bottom: 10px;
 }
 
@@ -145,14 +149,15 @@ h2 {
 .bottom-text {
     text-align: center;
     margin-top: 75px;
+    color: #f9f9f9;
 
 }
 
 .sticky-logo {
     pointer-events: none;
     position: fixed;
-    bottom: 10px;
-    right: 10px;
+    bottom: 1px;
+    right: 20px;
     z-index: 1000;
 }
 
