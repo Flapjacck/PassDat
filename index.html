@@ -24,9 +24,9 @@
                 <div class="assignments">
                     <div class="assignment">
                         <label>Assignment/Exam 1 Grade (%):</label>
-                        <input type="number" class="assignmentGrade" min="0" max="100">
+                        <input type="number" class="assignmentGrade" min="0" max="100" oninput="validateInput(this)">
                         <label>Weight (%):</label>
-                        <input type="number" class="assignmentWeight" min="0" max="100">
+                        <input type="number" class="assignmentWeight" min="0" max="100" oninput="validateInput(this)">
                     </div>
                 </div>
                 <button type="button" onclick="addAssignment(this)">Add Assignment</button>
@@ -40,6 +40,7 @@
             </div>
         </form>
         <button id="addClassButton" onclick="addClass()">Add Class</button>
+        <button id="addClassButton" onclick="GenerateGPA()">Generate GPA Summary</button>
         <div class="bottom-text">
             <p>Tip: Save your progress by saving the webpage. Remember to save your work frequently to avoid losing any progress!</p>
             <p>Windows: CTRL + S</p>
