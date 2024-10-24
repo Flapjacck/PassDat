@@ -65,7 +65,7 @@ function calculateGrade(button) {
     const gradeDisplay = form.querySelector('.gradeDisplay');
     gradeDisplay.innerHTML = `
         <div class="label">Current Grade:</div>
-        <div class="bar" style="width: ${finalGrade}%;">${finalGrade}%</div>
+        <div class="bar" style="width: ${finalGrade}%; background-color: ${getColor(finalGrade)};">${finalGrade}%</div>
     `;
 
     // Show lowest possible mark if total weight is below 100%
@@ -73,27 +73,34 @@ function calculateGrade(button) {
     const lowestMarkDisplay = form.querySelector('.lowestMarkDisplay');
     lowestMarkDisplay.innerHTML = `
         <div class="label">Lowest possible mark:</div>
-        <div class="bar" style="width: ${lowestMark}%;">${lowestMark}%</div>
+        <div class="bar" style="width: ${lowestMark}%; background-color: ${getColor(lowestMark)};">${lowestMark}%</div>
     `;
 
     // Calculate and display the mark needed to pass the course
     const remainingWeight = 100 - totalWeight;
-    const passMark = ((50 - totalScore) / (remainingWeight / 100)).toFixed(2);
+    let passMark;
+    
+    if (remainingWeight === 0) {
+        passMark = totalScore >= 50 ? 0 : Infinity;
+    } else {
+        passMark = ((50 - totalScore) / (remainingWeight / 100)).toFixed(2);
+    }
+    
     const passMarkDisplay = form.querySelector('.passMarkDisplay');
     if (passMark <= 0) {
         passMarkDisplay.innerHTML = `
             <div class="label">Minimum mark needed on next assignment/exam to pass:</div>
-            <div class="bar">You PassDat Already</div>
+            <div class="bar" style="background-color: ${getFlippedColor(passMark)};">You PassDat Already</div>
         `;
     } else if (passMark > 100) {
         passMarkDisplay.innerHTML = `
             <div class="label">Minimum mark needed on next assignment/exam to pass:</div>
-            <div class="bar">You're not going to PassDat</div>
+            <div class="bar" style="background-color: ${getFlippedColor(passMark)};">You're not going to PassDat</div>
         `;
     } else {
         passMarkDisplay.innerHTML = `
             <div class="label">Minimum mark needed on next assignment/exam to pass:</div>
-            <div class="bar" style="width: ${passMark}%;">${passMark}%</div>
+            <div class="bar" style="width: ${passMark}%; background-color: ${getFlippedColor(passMark)};">${passMark}%</div>
         `;
     }
 
@@ -103,6 +110,26 @@ function calculateGrade(button) {
         <div class="label">Remaining Weight:</div>
         <div class="bar" style="width: ${remainingWeight}%;">${remainingWeight}%</div>
     `;
+}
+
+function getColor(percentage) {
+    if (percentage < 40) {
+        return 'red';
+    } else if (percentage >= 40 && percentage < 60) {
+        return 'orange';
+    } else {
+        return 'green';
+    }
+}
+
+function getFlippedColor(percentage) {
+    if (percentage >= 60) {
+        return 'red';
+    } else if (percentage >= 40 && percentage < 60) {
+        return 'orange';
+    } else {
+        return 'green';
+    }
 }
 
 //function to add a class form
