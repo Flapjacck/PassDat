@@ -20,7 +20,7 @@ body {
 
 /* Header */
 header {
-    background-color: #343A40;
+    background-color: #212529;
     padding: 1em 0;
     display: flex;
     justify-content: center;
@@ -55,7 +55,7 @@ main {
 /* Forms */
 form {
     background: #DEF4C6;
-    padding: 20px;
+    padding: 15px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     margin: 0 25px 25px 25px;
@@ -64,6 +64,11 @@ form {
 .formHeaderContainer {
     display: flex;
     align-items: center;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .formHeaderContainer .formHeader {
@@ -71,12 +76,46 @@ form {
 }
 
 .formHeader {
-    background-color: #4CAF50;
+    background-color: #25ad76;
     color: white;
     padding: 10px;
     text-align: center;
     font-size: 1.5em;
-    border-radius: 5px 5px 0 0;
+    border-radius: 5px 0 0 5px;
+    margin-top: -10px;
+    border: 1px solid #25ad76;
+}
+
+
+#toggleFormButton {
+    background-color: #16945c;
+    color: white;
+    border: 1px solid #16945c;
+    border-radius: 0 5px 5px 0;
+    padding: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#toggleFormButton:hover {
+    background-color: #25ad76;
+}
+
+
+@media (max-width: 600px) {
+    .formHeaderContainer {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .formHeader {
+        border-radius: 5px 5px 0 0;
+    }
+
+    #toggleFormButton {
+        border-radius: 0 0 5px 5px;
+        width: 100%;
+    }
 }
 
 .assignment {
@@ -118,7 +157,7 @@ input[type="number"]:focus {
 
 /* Buttons */
 button {
-    background-color: #4caf50;
+    background-color: #16945c;
     color: white;
     border: none;
     border-radius: 5px;
@@ -144,7 +183,7 @@ button:hover {
 }
 
 #addClassButton {
-    background-color: #4CAF50;
+    background-color: #16945c;
     color: white;
 }
 

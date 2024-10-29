@@ -141,7 +141,7 @@ function addClass() {
     template.innerHTML = `
         <form class="gradeForm collapsible">
             <div class="formHeaderContainer">
-                <input type="text" class="formHeader" value="Grade Calculator Form">
+                <input type="text" class="formHeader" value="Class #?">
                 <button type="button" id="toggleFormButton" onclick="toggleForm(this)">v</button>
             </div>
             <div class="formContent">
