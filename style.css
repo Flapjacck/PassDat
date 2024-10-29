@@ -15,16 +15,36 @@ body {
     font-family: "Roboto", sans-serif;
     margin: 0;
     padding: 0;
-    background-color: #323030;
+    background-color: #212529;
 }
 
 /* Header */
 header {
-    background-color: #323030;
-    color: white;
-    text-align: center;
+    background-color: #343A40;
     padding: 1em 0;
-    font-style: italic;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+header img {
+    pointer-events: none;
+    width: 100%;
+    height: auto;
+    max-width: 600px; 
+}
+
+/* Adjust the max-width for even smaller screens */
+@media (max-width: 768px) {
+    header img {
+        max-width: 400px; 
+    }
+}
+
+@media (max-width: 480px) {
+    header img {
+        max-width: 300px; 
+    }
 }
 
 /* Main Content */

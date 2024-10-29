@@ -90,7 +90,7 @@ function calculateGrade(button) {
     if (passMark <= 0) {
         passMarkDisplay.innerHTML = `
             <div class="label">Minimum mark needed on next assignment/exam to pass:</div>
-            <div class="bar" style="background-color: ${getFlippedColor(passMark)};">You PassDat Already</div>
+            <div class="bar" style="background-color: ${getFlippedColor(passMark)};">You Already PassDat</div>
         `;
     } else if (passMark > 100) {
         passMarkDisplay.innerHTML = `
@@ -286,15 +286,15 @@ function displayGPA(gpa4Point, gpa12Point, totalLetterGrade, classGPAs) {
     modal.style.top = '50%';
     modal.style.left = '50%';
     modal.style.transform = 'translate(-50%, -50%)';
-    modal.style.width = '80%'; // Set width as a percentage of the viewport
-    modal.style.maxWidth = '600px'; // Set a maximum width
-    modal.style.height = '80%'; // Set height as a percentage of the viewport
-    modal.style.maxHeight = '600px'; // Set a maximum height
+    modal.style.width = '80%'; //width as a percentage of the viewport
+    modal.style.maxWidth = '600px'; 
+    modal.style.height = '80%'; //height as a percentage of the viewport
+    modal.style.maxHeight = '600px'; 
     modal.style.padding = '20px';
     modal.style.backgroundColor = 'white';
     modal.style.border = '1px solid #ccc';
     modal.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-    modal.style.overflowY = 'auto'; // Add vertical scroll if content overflows
+    modal.style.overflowY = 'auto'; // vertical scroll if content overflows
     modal.style.zIndex = '1000';
 
     const overlay = document.createElement('div');
