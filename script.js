@@ -450,6 +450,24 @@ function loadFormData() {
     generateGPAButton.textContent = 'Generate GPA Summary';
     generateGPAButton.onclick = GenerateGPA;
     mainContent.appendChild(generateGPAButton);
+
+    // Re-add the bottom text and sticky logo
+const bottomTextDiv = document.createElement('div');
+bottomTextDiv.className = 'bottom-text';
+bottomTextDiv.innerHTML = `
+    <p>Tip: Save your progress by saving the webpage. Remember to save your work frequently to avoid losing any progress!</p>
+    <p>Windows: CTRL + S</p>
+    <p>Mac: Choose File > Save As</p>
+    <p>Phone: Add to a list or save locally</p>
+`;
+mainContent.appendChild(bottomTextDiv);
+
+const stickyLogoDiv = document.createElement('div');
+stickyLogoDiv.className = 'sticky-logo';
+stickyLogoDiv.innerHTML = `
+    <img src="images/PassDat-logo.png" alt="Pass Dat Logo">
+`;
+mainContent.appendChild(stickyLogoDiv);
 }
 
 // Call loadFormData on page load
