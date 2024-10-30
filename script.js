@@ -3,6 +3,7 @@ function toggleForm(button) {
     const form = button.closest('form');
     form.classList.toggle('collapsed');
     button.textContent = form.classList.contains('collapsed') ? '∧' : '∨';
+    saveFormData();
 }
 
 //function to add a assignment in the form
@@ -17,7 +18,7 @@ function addAssignment(button) {
             <label>Assignment/Exam ${assignmentCount} Grade (%):</label>
             <input type="number" class="assignmentGrade" min="0" max="100" oninput="validateInput(this)">
             <label>Weight (%):</label>
-            <input type="number" class="assignmentWeight" min="0" max="100" oninput="validateInput(this)">
+            <input type="number" class="assignmentWeight" min="0" max="100" oninput="validateInput(this); validateWeight(this)">
         </div>
     `;
 
@@ -25,6 +26,7 @@ function addAssignment(button) {
     const newAssignment = document.createElement('div');
     newAssignment.innerHTML = newAssignmentHTML;
     assignments.appendChild(newAssignment.firstElementChild);
+    saveFormData();
 }
 
 //function to make sure the input is between 0 and 100
@@ -34,6 +36,26 @@ function validateInput(input) {
     } else if (input.value < 0) {
         input.value = 0;
     }
+    saveFormData();
+}
+
+//funtion to validate the weight of the assignment
+function validateWeight(input) {
+    const form = input.closest('form');
+    const assignmentWeights = form.querySelectorAll('.assignmentWeight');
+    let totalWeight = 0;
+
+    assignmentWeights.forEach(weightInput => {
+        if (weightInput !== input) {
+            totalWeight += parseFloat(weightInput.value) || 0;
+        }
+    });
+
+    const remainingWeight = 100 - totalWeight;
+    if (parseFloat(input.value) > remainingWeight) {
+        input.value = remainingWeight;
+    }
+    saveFormData();
 }
 
 //function to remove an assignment from the form
@@ -43,6 +65,7 @@ function removeAssignment(button) {
     if (assignments.children.length > 1) {
         assignments.removeChild(assignments.lastElementChild);
     }
+    saveFormData();
 }
 
 //function to calculate the grade
@@ -110,6 +133,7 @@ function calculateGrade(button) {
         <div class="label">Remaining Weight:</div>
         <div class="bar" style="width: ${remainingWeight}%;">${remainingWeight}%</div>
     `;
+    saveFormData();
 }
 
 function getColor(percentage) {
@@ -150,7 +174,7 @@ function addClass() {
                         <label>Assignment/Exam 1 Grade (%):</label>
                         <input type="number" class="assignmentGrade" min="0" max="100" oninput="validateInput(this)">
                         <label>Weight (%):</label>
-                        <input type="number" class="assignmentWeight" min="0" max="100" oninput="validateInput(this)">
+                        <input type="number" class="assignmentWeight" min="0" max="100" oninput="validateInput(this); validateWeight(this)">
                     </div>
                 </div>
                 <button type="button" onclick="addAssignment(this)">Add Assignment</button>
@@ -169,6 +193,7 @@ function addClass() {
     const newForm = template.content.firstChild.cloneNode(true);
     
     mainContent.insertBefore(newForm, document.getElementById('addClassButton'));
+    saveFormData();
 }
 
 //function to remove a class form
@@ -178,6 +203,7 @@ function removeClass(button) {
     if (confirmation) {
         form.parentNode.removeChild(form);
     }
+    saveFormData();
 }
 
 //function to calculate the GPA
@@ -219,7 +245,7 @@ function GenerateGPA() {
 
     if (totalWeight > 0) {
         const totalPercentageAverage = totalPercentage / totalWeight;
-        const gpa4Point = convertTo4PointScale(totalPercentageAverage)
+        const gpa4Point = convertTo4PointScale(totalPercentageAverage);
         const gpa12Point = convertTo12PointScale(totalPercentageAverage);
         const totalLetterGrade = convertToLetterGrade(totalPercentageAverage);
         displayGPA(gpa4Point, gpa12Point, totalLetterGrade, classGPAs);
@@ -336,3 +362,98 @@ function displayGPA(gpa4Point, gpa12Point, totalLetterGrade, classGPAs) {
     document.body.appendChild(modal);
     document.body.appendChild(overlay);
 }
+
+// Function to save form data to localStorage
+function saveFormData() {
+    // Select all forms with the class 'gradeForm'
+    const forms = document.querySelectorAll('.gradeForm');
+    const formData = [];
+
+    // Iterate over each form
+    forms.forEach((form, index) => {
+        const assignments = [];
+        // Iterate over each assignment within the form
+        form.querySelectorAll('.assignment').forEach(assignment => {
+            // Get the grade and weight values from the assignment
+            const grade = assignment.querySelector('.assignmentGrade').value;
+            const weight = assignment.querySelector('.assignmentWeight').value;
+            // Push the grade and weight as an object into the assignments array
+            assignments.push({ grade, weight });
+        });
+
+        // Push the form header and assignments into the formData array
+        formData.push({
+            header: form.querySelector('.formHeader').value,
+            assignments
+        });
+    });
+
+    // Save the formData array to localStorage as a JSON string
+    localStorage.setItem('formData', JSON.stringify(formData));
+}
+
+// Function to load form data from localStorage
+function loadFormData() {
+    // Parse the formData from localStorage
+    const formData = JSON.parse(localStorage.getItem('formData'));
+    if (!formData) return; // If no formData, exit the function
+
+    // Get the main content element and clear its inner HTML
+    const mainContent = document.getElementById('mainContent');
+    mainContent.innerHTML = ''; // Clear existing forms
+
+    // Iterate over each form data object
+    formData.forEach((data, index) => {
+        // Create a new form element
+        const form = document.createElement('form');
+        form.className = 'gradeForm collapsible';
+        // Set the inner HTML of the form with the form data
+        form.innerHTML = `
+            <div class="formHeaderContainer">
+                <input type="text" class="formHeader" value="${data.header}">
+                <button type="button" id="toggleFormButton" onclick="toggleForm(this)">v</button>
+            </div>
+            <div class="formContent">
+                <div class="assignments">
+                    ${data.assignments.map((assignment, i) => `
+                        <div class="assignment">
+                            <label>Assignment/Exam ${i + 1} Grade (%):</label>
+                            <input type="number" class="assignmentGrade" min="0" max="100" value="${assignment.grade}" oninput="validateInput(this)">
+                            <label>Weight (%):</label>
+                            <input type="number" class="assignmentWeight" min="0" max="100" value="${assignment.weight}" oninput="validateInput(this); validateWeight(this)">
+                        </div>
+                    `).join('')}
+                </div>
+                <button type="button" onclick="addAssignment(this)">Add Assignment</button>
+                <button type="button" onclick="removeAssignment(this)">Remove Assignment</button><br>
+                <button type="button" onclick="calculateGrade(this)">Calculate Grade</button>
+                <div class="gradeDisplay"></div>
+                <div class="lowestMarkDisplay"></div>
+                <div class="remainingWeightDisplay"></div>
+                <div class="passMarkDisplay"></div>
+                <button type="button" class="removeClassButton" onclick="removeClass(this)">Remove Class</button>
+            </div>
+        `;
+        // Append the form to the main content element
+        mainContent.appendChild(form);
+    });
+
+    // Re-add the Add Class and Generate GPA buttons
+    const addClassButton = document.createElement('button');
+    addClassButton.id = 'addClassButton';
+    addClassButton.textContent = 'Add Class';
+    addClassButton.onclick = addClass;
+    mainContent.appendChild(addClassButton);
+
+    const generateGPAButton = document.createElement('button');
+    generateGPAButton.id = 'addClassButton';
+    generateGPAButton.textContent = 'Generate GPA Summary';
+    generateGPAButton.onclick = GenerateGPA;
+    mainContent.appendChild(generateGPAButton);
+}
+
+// Call loadFormData on page load
+window.onload = loadFormData;
+
+// Save form data whenever an input changes
+document.addEventListener('input', saveFormData);

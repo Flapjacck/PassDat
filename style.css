@@ -125,6 +125,8 @@ form {
     margin-bottom: 15px;
     display: flex;
     flex-direction: column;
+    align-items: center;
+    text-align: center;
 }
 
 .assignment label,
@@ -173,7 +175,7 @@ button:hover {
     background-color: #45a049;
 }
 
-#addClassButton, #removeClassButton {
+#addClassButton{
     width: 100%;
     padding: 10px;
     border: none;
@@ -203,6 +205,7 @@ button:hover {
 /* Collapsible Forms */
 .collapsible .formContent {
     display: block;
+    text-align: center;
 }
 
 .collapsible.collapsed .formContent {
